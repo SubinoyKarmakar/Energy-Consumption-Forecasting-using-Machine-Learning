@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Energy Consumption Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Sustainable Energy Consumption Predictor</h1>
+    <div class="whole-box">
+        <form action="/predict" method="POST">
+    <div class="input-group">
+        <span class="input-group-text">Access to electricity(% of population)</span>
+        <input type="number" name="Access to electricity (% of population)" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Access to clean fuels for cooking</span>
+        <input type="number" name="Access to clean fuels for cooking" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+    </div>
+    
+    <div class="input-group">
+        <span class="input-group-text">Renewable-electricity-generating-capacity-per-capita</span>
+        <input type="number" name="Renewable-electricity-generating-capacity-per-capita" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Financial flows to developing countries (US $)</span>
+        <input type="number" name="Financial flows to developing countries (US $)" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Renewable energy share in the total final energy consumption (%)</span>
+        <input type="number" name="Renewable energy share in the total final energy consumption (%)" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Electricity from fossil fuels (TWh)</span>
+        <input type="number" name="Electricity from fossil fuels (TWh)" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Electricity from nuclear (TWh)</span>
+        <input type="number" name="Electricity from nuclear (TWh)" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Electricity from renewables (TWh)</span>
+        <input type="number" name="Electricity from renewables (TWh)" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Low-carbon electricity (% electricity)</span>
+        <input type="number" name="Low-carbon electricity (% electricity)" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Energy intensity level of primary energy (MJ/$2017 PPP GDP)</span>
+        <input type="number" name="Energy intensity level of primary energy (MJ/$2017 PPP GDP)" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Value_co2_emissions_kt_by_country</span>
+        <input type="number" name="Value_co2_emissions_kt_by_country" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Renewables (% equivalent primary energy)</span>
+        <input type="number" name="Renewables (% equivalent primary energy)" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">gdp_growth</span>
+        <input type="number" name="gdp_growth" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">gdp_per_capita</span>
+        <input type="number" name="gdp_per_capita" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Land Area(Km2)</span>
+        <input type="number" name="Land Area(Km2)" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+        <span class="input-group-text" style="border-radius: 6px 0% 0% 6px;">Latitude</span>
+        <input type="number" name="Latitude" step="any" aria-label="First name" class="form-control" required>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Longitude</span>
+        <input type="number" name="Longitude" step="any" aria-label="First name" class="form-control"  style="border-radius: 0% 6px 6px 0%;" required>
+    </div>
+
+    <div class="center-btn">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+          </form>
+    </div>
+{% if result != "Invalid input! Enter numbers only." %}
+  <p>Predicted Energy Consumption per Capita (kWh/person): {{ result }}</p>
+  <p>Category: {{ category }}</p>
+{% else %}
+  <p style="color:red;">{{ result }}</p>
+{% endif %}
+</body>
+</html>
